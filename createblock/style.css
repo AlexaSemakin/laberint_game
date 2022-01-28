@@ -1,0 +1,67 @@
+body,
+html {
+    padding: 0;
+    margin: 0;
+    font-size: 0px;
+    height: auto;
+    width: auto;
+    overflow-x: auto;
+    width: 350px;
+    height: 120px;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+#image_block {
+    background-color: green;
+    height: 10px;
+    width: 10px;
+    position: relative;
+}
+
+.imageBlock {
+    /* position: absolute; */
+    display: inline-block;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 10px;
+    width: 10px;
+}
+
+.id {
+    grid-template: auto;
+}
+
+.notVisible {
+    display: none;
+}
+
+#image_1 {
+    background-image: url("img/1.svg");
+    position: absolute;
+}
+
+#image_2 {
+    background-image: url("img/2.svg");
+    position: absolute;
+}
+
+#image_3 {
+    background-image: url("img/3.svg");
+    position: absolute;
+}
+
+#image_4 {
+    background-image: url("img/4.svg");
+    position: absolute;
+}
+
+#image_5 {
+    background-image: url("img/5.svg");
+    position: absolute;
+}
+
+#image_6 {
+    background-image: url("img/6.svg");
+    position: absolute;
+}
