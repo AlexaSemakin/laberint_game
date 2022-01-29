@@ -36,7 +36,7 @@ void dfs(int** map, int n, int nowX, int nowY, int finishX, int finishY, int was
         int toX = nowX + go_to[item][0];
         int toY = nowY + go_to[item][1];
         if (toX != wasX || toY != wasY){
-            if ((toX < 0) || (toX >= n) || (toY < 0) || (toY >= n) || (wasX != -1) && (map[toX][toY] != -1)){
+            if ((toX < 0) || (toX >= n) || (toY < 0) || (toY >= n) || (wasX != -1)){
                 map[nowX][nowY] = getNum (map[nowX][nowY], item);
             }
             else{

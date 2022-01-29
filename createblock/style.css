@@ -6,10 +6,10 @@ html {
     height: auto;
     width: auto;
     overflow-x: auto;
-    width: 350px;
-    height: 120px;
-    overflow-x: auto;
-    white-space: nowrap;
+    /* width: 350px;
+    height: 120px; */
+    /* overflow-x: auto;
+    white-space: nowrap; */
 }
 
 #image_block {
