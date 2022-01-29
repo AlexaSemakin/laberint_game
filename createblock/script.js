@@ -37,6 +37,29 @@ function to_go_point() {
     setCharaterPoint(point_now[0], point_now[1]);
 }
 
+function change_visible_text() {
+    if (document.getElementById('checkbox-visible-text').checked) {
+        document.getElementById("button_top").className = "visible_text";
+    } else {
+        document.getElementById("button_top").className = "non_visible_text";
+    }
+    if (document.getElementById('checkbox-visible-text').checked) {
+        document.getElementById("button_left").className = "visible_text";
+    } else {
+        document.getElementById("button_left").className = "non_visible_text";
+    }
+    if (document.getElementById('checkbox-visible-text').checked) {
+        document.getElementById("button_bottom").className = "visible_text";
+    } else {
+        document.getElementById("button_bottom").className = "non_visible_text";
+    }
+    if (document.getElementById('checkbox-visible-text').checked) {
+        document.getElementById("button_right").className = "visible_text";
+    } else {
+        document.getElementById("button_right").className = "non_visible_text";
+    }
+}
+
 function checkKey(e) {
     e = e || window.event;
     switch (e.keyCode) {
@@ -77,16 +100,18 @@ let go_to = [
     [1, 0],
     [0, -1],
 ];
+let visyble_arrow = true;
 
 function generate() {
-    map = [];
-    let val = parseInt(document.getElementById('textbox').value);
-    if (val <= 1000) {
+    let val = parseInt(document.getElementById('size_lab_textbox').value);
+    if (val <= 100 && val >= 10) {
         document.getElementById("display").innerHTML = "";
-        start(val);
     } else {
-        alert('максимальное значение - 10000 клетток')
+        document.getElementById('size_lab_textbox').value = map.length;
+        val = map.length;
     }
+    map = [];
+    start(val);
 }
 
 function restart_generate() {
@@ -105,25 +130,27 @@ function generete_interface() {
             block_image.className = "imageBlock";
             document.getElementById("display").append(block_image);
             let style = "";
+            let color_border = "black";
+            let color_not_border = "royalblue";
             if (item[0] == 1) {
-                style += "border-top: 3px solid black; ";
+                style += "border-top: 3px solid " + color_border + "; ";
             } else {
-                style += "border-top: 3px solid white; ";
+                style += "border-top: 3px solid " + color_not_border + "; ";
             }
             if (item[1] == 1) {
-                style += "border-right: 3px solid black; ";
+                style += "border-right: 3px solid " + color_border + "; ";
             } else {
-                style += "border-right: 3px solid white; ";
+                style += "border-right: 3px solid " + color_not_border + "; ";
             }
             if (item[2] == 1) {
-                style += "border-bottom: 3px solid black; ";
+                style += "border-bottom: 3px solid " + color_border + "; ";
             } else {
-                style += "border-bottom: 3px solid white; ";
+                style += "border-bottom: 3px solid " + color_not_border + "; ";
             }
             if (item[3] == 1) {
-                style += "border-left: 3px solid black; ";
+                style += "border-left: 3px solid " + color_border + "; ";
             } else {
-                style += "border-left: 3px solid white; ";
+                style += "border-left: 3px solid " + color_not_border + "; ";
             }
             block_image.style = style;
             //block_image.style = "border-top: " + item[0] * 3 + "px solid black; border-right:" + item[1] * 3 + "px solid black; border-bottom:" + item[2] * 3 + "px solid black; border-left: " + item[3] * 3 + "px solid black"
