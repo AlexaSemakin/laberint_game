@@ -11,11 +11,31 @@
 </head>
 
 <body onload="start(10)">
-    <input type="number" id='textbox'>
-    <input type="button" id='button' value="сгенерировать" onclick="generate()">
-    <div id="display">
+    <div id="laberint">
+        <div id="character">
 
+        </div>
+        <div id="display">
+
+        </div>
     </div>
+    <div id="div_settings">
+        <input type="button" id='button_news' value="Новый лаберинт" onclick="restart_generate()">
+        <h3>Клавиши управления</h3>
+        <div id="air"></div>
+        <input type="button" id='button_top' class="btn" value="⬆" onclick="to_top()">
+        <div id="air"></div>
+        <br>
+        <input type="button" id='button_left' class="btn" value="⬅" onclick="to_left()">
+        <input type="button" id='button_bottom' class="btn" value="⬇" onclick="to_bottom()">
+        <input type="button" id='button_right' class="btn" value="➡" onclick="to_right()">
+        <h3>Изменить размерность</h3>
+        <input type="number" id='textbox'>
+        <input type="button" id='button' value="сгенерировать" onclick="generate()">
+    </div>
+
+
+
 </body>
 
 

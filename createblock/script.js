@@ -1,64 +1,156 @@
-function getRandomInt(max) {
-    return Math.floor(Math.random() * max);
+document.onkeydown = checkKey;
+
+function setCharaterPoint(x, y) {
+    let step = 10;
+    document.getElementById("character").style = "left: " + (x * (step + 6)).toString() + "px; top: " + (y * (step + 6)).toString() + "px;";
+}
+
+function to_top() {
+    if (map[point_now[1]][point_now[0]][0] == 0) {
+        point_now[1]--;
+    }
+    to_go_point()
+}
+
+function to_bottom() {
+    if (map[point_now[1]][point_now[0]][2] == 0) {
+        point_now[1]++;
+    }
+    to_go_point()
+}
+
+function to_left() {
+    if (map[point_now[1]][point_now[0]][3] == 0) {
+        point_now[0]--;
+    }
+    to_go_point()
+}
+
+function to_right() {
+    if (map[point_now[1]][point_now[0]][1] == 0) {
+        point_now[0]++;
+    }
+    to_go_point()
+}
+
+function to_go_point() {
+    setCharaterPoint(point_now[0], point_now[1]);
+}
+
+function checkKey(e) {
+    e = e || window.event;
+    switch (e.keyCode) {
+        case 37:
+        case 39:
+        case 38:
+        case 40: // Arrow keys
+        case 32:
+            e.preventDefault();
+            break; // Space
+        default:
+            break; // do not block other keys
+    }
+    if (e.keyCode == '38') {
+        to_top();
+    } else if (e.keyCode == '40') {
+        to_bottom();
+    } else if (e.keyCode == '37') {
+        to_left();
+    } else if (e.keyCode == '39') {
+        to_right();
+    }
+    to_go_point()
 }
 
 
-var go_to_vector = [];
-var map = [];
-var go_to = [
-    [0, -1],
-    [1, 0],
+
+function getRandomInt(max) {
+    return Math.floor(Math.random() * max);
+}
+let point_now = [0, 0];
+let elements = [];
+let go_to_vector = [];
+let map = [];
+let go_to = [
+    [-1, 0],
     [0, 1],
-    [-1, 0]
+    [1, 0],
+    [0, -1],
 ];
 
 function generate() {
-    var val = parseInt(document.getElementById('textbox').value);
-    if (val <= 100) {
+    map = [];
+    let val = parseInt(document.getElementById('textbox').value);
+    if (val <= 1000) {
         document.getElementById("display").innerHTML = "";
-        var map = [
-
-        ];
         start(val);
     } else {
         alert('максимальное значение - 10000 клетток')
     }
 }
 
-function generete_interface(map) {
+function restart_generate() {
+    n = map.length;
+    map = [];
+    start(n);
+}
+
+function generete_interface() {
+    setCharaterPoint(0, 0);
+    point_now = [0, 0];
     document.getElementById("display").innerHTML = "";
     map.forEach(array => {
         array.forEach(item => {
-            var block_image = document.createElement("div");
+            let block_image = document.createElement("div");
             block_image.className = "imageBlock";
             document.getElementById("display").append(block_image);
-            if (item == 128) {
-                block_image.style = "background-color:'green'";
+            let style = "";
+            if (item[0] == 1) {
+                style += "border-top: 3px solid black; ";
             } else {
-                var element = item.toString(2);
-                for (var i = 1; i <= go_to.length; i++) {
-                    if (element[i] == '1') {
-                        var image = document.createElement("div");
-                        image.className = "imageBlock";
-                        image.id = 'image_' + (i).toString();
-                        block_image.appendChild(image);
-                    }
-                }
+                style += "border-top: 3px solid white; ";
             }
+            if (item[1] == 1) {
+                style += "border-right: 3px solid black; ";
+            } else {
+                style += "border-right: 3px solid white; ";
+            }
+            if (item[2] == 1) {
+                style += "border-bottom: 3px solid black; ";
+            } else {
+                style += "border-bottom: 3px solid white; ";
+            }
+            if (item[3] == 1) {
+                style += "border-left: 3px solid black; ";
+            } else {
+                style += "border-left: 3px solid white; ";
+            }
+            block_image.style = style;
+            //block_image.style = "border-top: " + item[0] * 3 + "px solid black; border-right:" + item[1] * 3 + "px solid black; border-bottom:" + item[2] * 3 + "px solid black; border-left: " + item[3] * 3 + "px solid black"
+
+            // for (let i = 0; i <= item.length; i++) {
+            //     if (item[i] == 1) {
+            //         let image = document.createElement("div");
+            //         image.className = "imageBlock";
+            //         image.id = 'image_' + (i + 1).toString();
+            //         block_image.appendChild(image);
+            //     }
+            // }
+
         });
         document.getElementById("display").innerHTML += "<br>";
     });
 }
 
 function generate_go_to_vector(count) {
-    var elements = [];
+    elements = [];
     go_to_vector = [];
     for (let i = 0; i < count; i++) {
         elements.push(i);
     }
     while (go_to_vector.length < 4) {
-        var index = getRandomInt(elements.length);
-        var element = elements[index];
+        let index = getRandomInt(elements.length);
+        let element = elements[index];
         go_to_vector.push(element);
         elements.splice(index, 1);
     }
@@ -69,37 +161,33 @@ function getNum(a, b) {
     return a;
 }
 
-function dfs(nowX, nowY, n, wasX = -1, wasY = -1, finX = map.length - 1, finY = map.length - 1) {
+function dfs(nowX, nowY, n, wasX = -1, wasY = -1) {
     generate_go_to_vector(go_to.length);
-    map[nowX][nowY] = 16;
-    if (nowX == finX && nowY == finY) {
-        map[nowX][nowY] = 128;
-        return;
-    }
+    map[nowX][nowY] = [0, 0, 0, 0];
     go_to_vector.forEach(item => {
-        var toX = nowX + go_to[item][0];
-        var toY = nowY + go_to[item][1];
+        let toX = nowX + go_to[item][0];
+        let toY = nowY + go_to[item][1];
         if (toX != wasX || toY != wasY) {
-            if ((toX < 0) || (toX >= n) || (toY < 0) || (toY >= n) || map[toX][toY] != -1) {
-                map[nowX][nowY] = getNum(map[nowX][nowY], item);
+            if ((toX < 0) || (toX >= n) || (toY < 0) || (toY >= n) || map[toX][toY].length > 0) {
+                map[nowX][nowY][item] = 1;
             } else {
-                dfs(toX, toY, n, nowX, nowY, finX, finY);
+                dfs(toX, toY, n, nowX, nowY);
             }
         }
     });
 }
 
 
-function start(n) {
-    for (var i = 0; i < n; i++) {
+function start(n, m) {
+    for (let i = 0; i < n; i++) {
         map.push([]);
-        for (var j = 0; j < n; j++) {
-            map[i][j] = -1;
+        for (let j = 0; j < n; j++) {
+            map[i].push([]);
         }
     }
-    dfs(0, 0, n);
+    dfs(parseInt(n / 2), parseInt(n / 2), n);
     console.log('generated success');
-    generete_interface(map);
+    generete_interface();
     console.log('image generated success');
 
 }
