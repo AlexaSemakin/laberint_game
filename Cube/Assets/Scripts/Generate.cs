@@ -11,7 +11,7 @@ public class Generate : MonoBehaviour
     {
         //cube = GameObject.FindObjectOfType<Cube>(); 
         GameObject cubeClone;
-        Point size = new Point(4, 1, 4);
+        Point size = new Point(4, 4, 4);
         Point current = new Point(0);
         ManagerGame.GenerateMap(new SizeMap(size));
         print(size.X);
